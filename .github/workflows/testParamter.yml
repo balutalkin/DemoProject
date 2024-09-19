@@ -34,4 +34,4 @@ jobs:
           EMAIL_TO: ${{ inputs.email_to }}
           EMAIL_CC: ${{ inputs.email_cc }}
         run: |
-          java --version -DemailTo=${EMAIL_TO} -DemailCc=${EMAIL_CC} -jar test.jar
+          java --version -DemailTo=${EMAIL_TO} -DemailCc=${EMAIL_CC}
