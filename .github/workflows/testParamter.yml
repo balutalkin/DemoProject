@@ -45,8 +45,12 @@ jobs:
       - name: Get input values
         id: get_inputs
         run: |
-          echo "EMAIL_TO=${{ github.event.inputs.email_to || '' }}" >> $GITHUB_ENV
-          echo "EMAIL_CC=${{ github.event.inputs.email_cc || '' }}" >> $GITHUB_ENV  
+          EMAIL_TO=${{ github.event.inputs.email_to || '' }}
+          EMAIL_CC=${{ github.event.inputs.email_cc || '' }}
+          echo "EMAIL_TO=$EMAIL_TO" >> $GITHUB_ENV
+          echo "EMAIL_CC=$EMAIL_CC" >> $GITHUB_ENV  
+          echo "EMAIL_TO: $EMAIL_TO"
+          echo "EMAIL_CC: $EMAIL_CC"
       - name: Run java code
         shell: cmd
         env:
