@@ -21,8 +21,8 @@ on:
           description: 'Email CC IDs sepearted by Comma'
           default: test2@test.com
           required: false 
-  schedule:
-   - cron: '0/5 * * * *'
+  #schedule:
+   #- cron: '0/5 * * * *'
   push:
     branches:
       - main
