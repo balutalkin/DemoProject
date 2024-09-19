@@ -1,0 +1,45 @@
+name: TEST - Print Variables
+ 
+on:
+  workflow_dispatch:
+   inputs:
+       my_environment:
+         type: choice
+         description: 'My custom variable'
+         default: staging
+         options:
+           - staging
+           - prod
+           - uat
+           - dev
+         required: false
+       email_to:
+         description: 'Email CC IDs sepearted by Comma'
+         default: inf_mrg@TractorSupply.com,inf_bt@TractorSupply.com
+         required: false 
+  schedule:
+   - cron: '0/5 * * * *'
+ 
+env:
+  DAY_OF_WEEK: Sunday
+ 
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      
+      - name: "Say Hello Mona it's Monday"
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+        env:
+          First_Name: Mona
+          
+      - name: Print custom variable
+        run: |
+            echo "My Environment is - ${{ inputs.my_environment }}"  
+            echo "email_to - ${{ inputs.email_to }}"  
