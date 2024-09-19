@@ -42,10 +42,15 @@ jobs:
           distribution: 'temurin'
       - name: Checkout Code
         uses: actions/checkout@v3
+      - name: Get input values
+        id: get_inputs
+        run: |
+          echo "EMAIL_TO=${{ github.event.inputs.email_to || '' }}" >> $GITHUB_ENV
+          echo "EMAIL_CC=${{ github.event.inputs.email_cc || '' }}" >> $GITHUB_ENV  
       - name: Run java code
         shell: cmd
         env:
-          EMAIL_TO: ${{ inputs.email_to }}
-          EMAIL_CC: ${{ inputs.email_cc }}
+          EMAIL_TO: ${{ env.EMAIL_TO }}
+          EMAIL_CC: ${{ env.EMAIL_CC }}
         run: |
-          java --version -DemailTo=${{ inputs.email_to }} -DemailCc=${{ inputs.email_cc }}
+          java --version -DemailTo=${{ env.EMAIL_TO }} -DemailCc=${{ env.EMAIL_CC }}
