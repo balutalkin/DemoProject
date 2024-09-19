@@ -1,0 +1,37 @@
+name: Scheduled Java Job
+
+on:
+  workflow_dispatch:
+   inputs:
+       my_environment:
+         type: choice
+         description: 'My custom variable'
+         default: staging
+         options:
+           - staging
+           - prod
+           - uat
+           - dev
+         required: false
+       email_to:
+         description: 'Email CC IDs sepearted by Comma'
+         default: inf_mrg@TractorSupply.com,inf_bt@TractorSupply.com
+         required: false 
+  schedule:
+   - cron: '0/5 * * * *'
+  push:
+    branches:
+      - main
+
+jobs:
+  java-job:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run java code
+        shell: cmd
+        env:
+          EMAIL_TO: ${{ inputs.email_to }}
+          EMAIL_CC: ${{ inputs.email_cc }}
+        run: |
+          java --version -DemailTo=${EMAIL_TO} -DemailCc=${EMAIL_CC} -jar test.jar
