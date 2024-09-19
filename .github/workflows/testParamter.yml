@@ -14,9 +14,13 @@ on:
            - dev
          required: false
        email_to:
-         description: 'Email CC IDs sepearted by Comma'
-         default: inf_mrg@TractorSupply.com,inf_bt@TractorSupply.com
-         required: false 
+          description: 'Email TO IDs sepearted by Comma'
+          default: test1@test.com
+          required: false
+       email_cc:
+          description: 'Email CC IDs sepearted by Comma'
+          default: test2@test.com
+          required: false 
   schedule:
    - cron: '0/5 * * * *'
   push:
