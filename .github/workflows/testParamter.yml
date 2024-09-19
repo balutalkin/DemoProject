@@ -16,11 +16,11 @@ on:
        email_to:
           description: 'Email TO IDs sepearted by Comma'
           default: test1@test.com
-          required: false
+          required: true
        email_cc:
           description: 'Email CC IDs sepearted by Comma'
           default: test2@test.com
-          required: false 
+          required: true 
   schedule:
    - cron: '0/5 * * * *'
   push:
@@ -42,17 +42,10 @@ jobs:
           distribution: 'temurin'
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Get input values
-        shell: cmd
-        run: |
-          EMAIL_TO=${{ inputs.email_to || '' }}
-          EMAIL_CC=${{ inputs.email_cc || '' }}
-          echo "EMAIL_TO=$EMAIL_TO" >> $GITHUB_ENV
-          echo "EMAIL_CC=$EMAIL_CC" >> $GITHUB_ENV  
+      - name: Set EMAIL_TO environment variable
+        env:
+          EMAIL_TO: ${{ github.event.inputs.email_to || 'default@example.com' }}  
       - name: Run java code
         shell: cmd
-        env:
-          EMAIL_TO: ${{ env.EMAIL_TO }}
-          EMAIL_CC: ${{ env.EMAIL_CC }}
         run: |
-          java --version -DemailTo=${{ env.EMAIL_TO }} -DemailCc=${{ env.EMAIL_CC }}
+          java --version -DemailTo=${{ env.EMAIL_TO }} -DemailCc=${{ env.EMAIL_TO }}
