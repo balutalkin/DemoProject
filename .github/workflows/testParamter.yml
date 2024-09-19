@@ -27,7 +27,8 @@ on:
     branches:
       - main
 env:
-  EMAIL_TO: ${{ github.event.inputs.email_to || 'default@example.com' }}
+  EMAIL_TO: ${{ inputs.email_to || 'defaultTO@example.com' }}
+  EMAIL_CC: ${{ inputs.email_cc || 'defaultCC@example.com' }}
 
 jobs:
   java-job:
@@ -50,4 +51,4 @@ jobs:
       - name: Run java code
         shell: cmd
         run: |
-          java --version -DemailTo=${{ env.EMAIL_TO }} -DemailCc=${{ env.EMAIL_TO }}
+          java --version -DemailTo=${{ env.EMAIL_TO }} -DemailCc=${{ env.EMAIL_CC }}
